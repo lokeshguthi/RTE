@@ -1,0 +1,6 @@
+{
+	"Compiler": "FsharpCompiler",
+	"TestType": "xUnitTest",
+	"Timeout": 160,
+	"AllowedFiles": ["Santa.fs"]
+}

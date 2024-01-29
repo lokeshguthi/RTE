@@ -1,0 +1,6 @@
+{
+	"Compiler": "FsharpCompiler",
+	"TestType": "xUnitTest",
+	"Timeout": 10,
+	"AllowedFiles": ["Program.fs"]
+}

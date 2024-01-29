@@ -1,0 +1,6 @@
+{
+	"Compiler": "PythonCompiler",
+	"TestType": "PyTest",
+	"AllowedFiles": ["fakultaet.py"]
+}
+
