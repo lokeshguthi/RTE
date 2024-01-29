@@ -95,71 +95,10 @@ The timeout is a hard limit of the execution time of the complete JUnit test.
 If this hard limit triggers, the complete execution will be killed and no output is produced.
 In order to avoid this, make sure that all tests contain a timeout such that the total sum of these timeouts is less than the hard limit specified using the `Timeout` parameter.
 
-### Additional resources and libraries
-
-Additional resources needed for the test cases can be provided in a `resources` sub-folder of the test case folder.
-The files in this folder will be copied into the working directory of each execution of the test before compilation and running the test.
-This feature is intended for source files provided together with the task description or larger input files required to execute the program.
-
-If a Java test requires additional libraries in form of JAR files to be executed, these files cannot be provided as
-resources because they need to be registered with the Java compiler and interpreter.
-Instead, these `.jar` files can be added to a `lib` sub-folder of the test case and are automatically added to the classpath
-in the compile and run phase.
-
-## The REST Interface
-
-**TODO**
 
 
-# Deployment
-
-Build project with (might be more complicated if you are not on Linux?):
-
-    go build
-    
-Copy the executable to the server (executable name seems to depend on directory name?):
-
-    scp rte-go zeller@lamport.cs.uni-kl.de:~/
-    
-Connect to server and deploy:
-
-    ssh zeller@lamport.cs.uni-kl.de
-    cd /opt/rte/
-    cp rte ~/rte-backup
-    sudo systemctl stop rte.service
-    sudo cp ~/rte-go ./rte
-    sudo systemctl start rte.service
 
 
-## Deploy Docker Images
-
-### Via GitLab Docker Registry
-
-- On your machine:
-  - `docker login softech-git.informatik.uni-kl.de:5050`
-    - You need a [personal access token](https://softech-git.informatik.uni-kl.de/profile/personal_access_tokens) with scopes `read_registry, write_registry` for an account that has at least developer permissions to `stats/rte-go`
-  - Build the docker images in the docker folder using the respective Makefiles (`make` or `make build`)
-  - Push the images to the GitLab Container Registry using `make push` (you can also run `make build push`)
-  - TODO: This should probably be automated using GitLab CI, see https://docs.gitlab.com/ee/ci/docker/using_kaniko.html
-- On the server:
-  - `sudo -u rte --set-home docker login softech-git.informatik.uni-kl.de:5050`
-    - Either use a deploy token for `stats/rte-go` with scope `read_registry`
-    - Or a personal access token with scope `read_registry` for an account that has at least reporter permissions to `stats/rte-go`
-    - (already configured on `lamport` using a deploy token)
-  - `sudo -u rte --set-home docker pull softech-git.informatik.uni-kl.de:5050/stats/rte-go/cdev` (replace `cdev` with the image you want to pull)
-
-
-### Manually using docker save
-
-Build the docker images in the docker folder using the respective Makefiles (`make` or `make build`).
-Then copy to server. For example to copy the F# image:
-
-    docker save -o docker-fsharpdev softech-git.informatik.uni-kl.de:5050/stats/rte-go/fsharpdev:latest
-    scp docker-fsharpdev zeller@lamport:~/
-    rm docker-fsharpdev
-    ssh zeller@lamport
-    docker load -i docker-fsharpdev
-    rm docker-fsharpdev
 
 ### Building on the server
 
